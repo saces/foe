@@ -1,0 +1,5 @@
+Libraries required for build
+
+run build.xml to get all libs.
+
+If this is empty all dependencies are resolved via bundles. :)

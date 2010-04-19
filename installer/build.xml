@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="installer" default="install" basedir=".">
+	<description>
+		Creates a 'smash install', for seeing all the NPEs ;)
+	</description>
+
+	<!-- Give user a chance to override without editing this file
+			(and without typing -D each time it compiles it) -->
+	<property file="build.properties" />
+
+	<property name="wrapper.version" value="3.4.0"/>
+	<property name="wrapper.location" location="../orbit/contrib/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
+
+	<!-- set global properties for this build -->
+	<property name="target" location="/home/saces/automative/freenet-osgi-test"/>
+	<property name="template" location="template"/>
+
+	<target name="mkdir">
+		<mkdir dir="${target}"/>
+	</target>
+
+	<target name="install" depends="clean, mkdir">
+		<copy todir="${target}" includeEmptyDirs="true">
+			<fileset dir="${template}"/>
+		</copy>
+		<chmod file="${target}/run.sh" perm="+x"/>
+
+		<gunzip src="${wrapper.location}" dest="tmp.tar"/>
+		<untar src="tmp.tar" dest="${target}/bin">
+			<patternset>
+				<include name="wrapper-delta-pack-${wrapper.version}/bin/wrapper*"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+		<untar src="tmp.tar" dest="${target}/lib">
+			<patternset>
+				<include name="wrapper-delta-pack-${wrapper.version}/lib/libwrapper*"/>
+				<include name="wrapper-delta-pack-${wrapper.version}/lib/wrapper*.dll"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+		<untar src="tmp.tar" dest="${target}">
+			<patternset>
+				<include name="wrapper-delta-pack-${wrapper.version}/lib/wrapper.jar"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+		<chmod dir="${target}/bin" perm="+x" includes="wrapper*" excludes="*.exe"/>
+		<delete file="tmp.tar"/>
+
+		<copy file="../orbit/lib/servlet-api-2.3.jar" todir="${target}"/>
+
+		<copy file="../orbit/lib/freenet-ext.jar" todir="${target}"/>
+		<copy file="../fred/lib/freenet-cvs-snapshot.jar" tofile="${target}/freenet.jar"/>
+
+		<copy file="../concierge/framework/dist/fconcierce.jar" tofile="${target}/fconcierce.jar"/>
+
+		<copy file="../FreenetService/dist/FreenetService.jar" todir="${target}/bundles/"/>
+
+		<copy file="../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
+
+		<copy file="../FreenetConfigurator/dist/FreenetConfigurator.jar" todir="${target}/bundles/"/>
+
+	</target>
+
+	<target name="clean">
+		<delete dir="${target}"/>
+	</target>
+
+
+</project>

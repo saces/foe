@@ -1,0 +1,10 @@
+-Dch.ethz.iks.concierge.jars=file:./bundles
+-Dch.ethz.iks.concierge.log.enabled=true
+-Dch.ethz.iks.concierge.log.level=4
+-Dorg.osgi.service.http.port=9876
+
+-init
+
+-istart FreenetService.jar
+-istart concierge-http.jar
+-istart FreenetConfigurator.jar

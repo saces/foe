@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="orbit" default="orbit" basedir=".">
+	<description>
+		This file collects all prebild/binary stuff from iNet
+	</description>
+
+	<!-- Give user a chance to override without editing this file
+			(and without typing -D each time it compiles it) -->
+	<property file="build.properties" />
+
+	<!-- set global properties for this build -->
+	<property name="lib" location="lib"/>
+	<property name="contrib" location="contrib"/>
+	<property name="freenet-ext.location" location="${lib}/freenet-ext.jar"/>
+	<property name="wrapper.version" value="3.4.0"/>
+	<property name="wrapper.location" location="${contrib}/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
+	<property name="servletapi.version" value="2.3"/>
+	<property name="servletapi.location" location="${lib}/servlet-api-${servletapi.version}.jar"/>
+	<property name="javolution.version" value="5.5.0"/>
+	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
+
+	
+	<target name="mkdir">
+		<mkdir dir="${lib}"/>
+		<mkdir dir="${contrib}"/>
+	</target>
+
+	<target name="env" depends="mkdir"   description="Learn about the environment">
+		<available file="${freenet-ext.location}" property="freenet-ext.present"/>
+		<available file="${wrapper.location}" property="wrapper.present"/>
+		<available file="${servletapi.location}" property="servletapi.present"/>
+		<available file="${javolution.location}" property="javolution.present"/>
+	</target>
+
+	<target name="get-extjar" depends="env" unless="freenet-ext.present"
+		description="Download some external libraries which Freenet relies on">
+		<get src="http://checksums.freenetproject.org/cc/freenet-ext.jar"
+			dest="${freenet-ext.location}.tmp"
+			verbose="true"
+			usetimestamp="true"/>
+		<zip destfile="${freenet-ext.location}">
+			<zipfileset src="${freenet-ext.location}.tmp">
+				<exclude name="org/tanukisoftware/**"/>
+			</zipfileset>
+		</zip>
+		<delete file="${freenet-ext.location}.tmp"/>
+	</target>
+
+	<target name="get-wrapper" depends="env" unless="wrapper.present"
+		description="Download some external libraries which Freenet relies on">
+		<get src="http://wrapper.tanukisoftware.org/download/${wrapper.version}/wrapper-delta-pack-${wrapper.version}.tar.gz"
+			dest="${wrapper.location}"
+			verbose="true"
+			usetimestamp="true"/>
+		<gunzip src="${wrapper.location}" dest="tmp.tar"/>
+		<untar src="tmp.tar" dest="${lib}">
+			<patternset>
+				<include name="wrapper-delta-pack-${wrapper.version}/lib/wrapper.jar"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+		<delete file="tmp.tar"/>
+	</target>
+
+	<target name="get-servletapi" depends="env" unless="servletapi.present"
+		description="Download some external libraries which Freenet relies on">
+		<get src="http://repo1.maven.org/maven2/javax/servlet/servlet-api/${servletapi.version}/servlet-api-${servletapi.version}.jar"
+			dest="${servletapi.location}"
+			verbose="true"
+			usetimestamp="true"/>
+		<get src="http://repo1.maven.org/maven2/javax/servlet/servlet-api/${servletapi.version}/servlet-api-${servletapi.version}-sources.jar"
+			dest="${contrib}/servlet-api-${servletapi.version}-sources.jar"
+			verbose="true"
+			usetimestamp="true"/>
+	</target>
+
+	<target name="get-javolution" depends="env" unless="javolution.present"
+		description="Download some external libraries which Freenet relies on">
+		<get src="http://download.java.net/maven/2/javolution/javolution/${javolution.version}/javolution-${javolution.version}.jar"
+			dest="${javolution.location}"
+			verbose="true"
+			usetimestamp="true"/>
+		<get src="http://download.java.net/maven/2/javolution/javolution/${javolution.version}/javolution-${javolution.version}-sources.jar"
+			dest="${contrib}/javolution-${javolution.version}-sources.jar"
+			verbose="true"
+			usetimestamp="true"/>
+	</target>
+
+	<target name="orbit" depends="get-extjar, get-wrapper, get-servletapi, get-javolution">
+	</target>
+
+	<target name="test">
+		<untar src="tmp.tar" dest="${lib}">
+			<patternset>
+				<include name="wrapper-delta-pack-${wrapper.version}/lib/wrapper.jar"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</untar>
+	</target>
+
+	<!-- ================================================== -->
+
+	<target name="clean" description="Delete class files and docs dir.">
+		<delete dir="${lib}"/>
+		<delete dir="${contrib}"/>
+	</target>
+
+</project>
