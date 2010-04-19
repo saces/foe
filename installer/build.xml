@@ -51,13 +51,13 @@
 		<copy file="../orbit/lib/servlet-api-2.3.jar" todir="${target}"/>
 
 		<copy file="../orbit/lib/freenet-ext.jar" todir="${target}"/>
-		<copy file="../fred/lib/freenet-cvs-snapshot.jar" tofile="${target}/freenet.jar"/>
+		<copy file="../../fred/lib/freenet-cvs-snapshot.jar" tofile="${target}/freenet.jar"/>
 
-		<copy file="../concierge/framework/dist/fconcierce.jar" tofile="${target}/fconcierce.jar"/>
+		<copy file="../../concierge/framework/dist/fconcierce.jar" tofile="${target}/fconcierce.jar"/>
 
 		<copy file="../FreenetService/dist/FreenetService.jar" todir="${target}/bundles/"/>
 
-		<copy file="../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
+		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
 
 		<copy file="../FreenetConfigurator/dist/FreenetConfigurator.jar" todir="${target}/bundles/"/>
 
