@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="FreenetService" default="bundle" basedir=".">
 
+	<property name="freenet-ext.location" location="../orbit/lib/freenet-ext.jar"/>
+	<property name="freenet.location" location="../../fred/lib/freenet-cvs-snapshot.jar"/>
+
 	<property name="src" location="src" />
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
@@ -26,6 +29,11 @@
 				<attribute name="Bundle-Activator" value="freenet.osgi.freenetservice.FreenetServiceActivator" />
 				<attribute name="Import-Package" value="org.osgi.framework;version=1.3.0" />
 			</manifest>
+			<zipfileset src="${freenet.location}">
+			</zipfileset>
+			<zipfileset src="${freenet-ext.location}">
+				<exclude name="org/tanukisoftware/**"/>
+			</zipfileset>
 		</jar>
 	</target>
 
