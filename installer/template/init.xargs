@@ -5,6 +5,7 @@
 
 -init
 
+-istart FreenetLogger.jar
 -istart FreenetService.jar
 -istart concierge-http.jar
 -istart FreenetConfigurator.jar

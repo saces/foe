@@ -60,6 +60,8 @@
 		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
 
 		<copy file="../FreenetConfigurator/dist/FreenetConfigurator.jar" todir="${target}/bundles/"/>
+		
+		<copy file="../FreenetLogger/dist/FreenetLogger.jar" todir="${target}/bundles/"/>
 
 	</target>
 
