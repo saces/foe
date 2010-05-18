@@ -25,6 +25,10 @@ public class FreenetServiceActivator implements BundleActivator {
 				"d (c, t, p): m", "MMM dd, yyyy HH:mm:ss:SSS", 0);
 
 		Logger.globalAddHook(hook);
+		
+		// for compatiblity with old code also
+		// init the old logger
+		freenet.support.Logger.migrationHack(hook);
 
 		Logger.error(this, "Hello, Error");
 		Logger.normal(this, "Hello, normal");
