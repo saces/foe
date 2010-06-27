@@ -27,7 +27,8 @@
 				<!-- attribute name="Bundle-SymbolicName" value="org.foo.example.Example" / -->
 				<attribute name="Bundle-Version" value="1" />
 				<attribute name="Bundle-Activator" value="freenet.osgi.freenetservice.FreenetServiceActivator" />
-				<attribute name="Import-Package" value="org.osgi.framework;version=1.3.0, freenet.log" />
+				<attribute name="Import-Package" value="org.osgi.framework;version=1.3.0, freenet.log, freenet.osgi.support, freenet.osgi.support.bucket, freenet.osgi.support.io, freenet.osgi.clientapi" />
+				<attribute name="Export-Package" value="freenet.keys, freenet.support, freenet.support.io" />
 			</manifest>
 			<zipfileset src="${freenet.location}">
 			</zipfileset>

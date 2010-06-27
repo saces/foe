@@ -4,14 +4,14 @@
 	<property name="src" location="src" />
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
+	<property name="framework.jar.location" location="../../concierge/framework/dist/fconcierge.jar"/>
 
 	<target name="compile" description="Compile the code">
 		<mkdir dir="${build}" />
-		<javac srcdir="${src}" destdir="${build}" nowarn="false" debug="false" optimize="true" deprecation="true" target="1.1" verbose="false" fork="false" source="1.2">
-			<src>
-				<pathelement location="${src}" />
-			</src>
-			<classpath refid="build.classpath" />
+		<javac srcdir="${src}" destdir="${build}" nowarn="false" debug="false" optimize="true" deprecation="true" target="1.5" verbose="false" fork="false" source="1.5">
+			<classpath>
+				<pathelement location="${framework.jar.location}"/>
+			</classpath>
 		</javac>
 	</target>
 

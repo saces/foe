@@ -50,7 +50,7 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 			// Ignored.
 		}
 	}
-	
+
 	private DateFormat df;
 	private int[] fmt;
 	private String[] str;
@@ -178,7 +178,7 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 					break;
 			}
 		}
-		sb.append('\n');
+		//sb.append('\n');
 
 		priority = transformLogLevelFO(priority);
 		if (e != null) {
