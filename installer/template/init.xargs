@@ -1,11 +1,13 @@
 -Dch.ethz.iks.concierge.jars=file:./bundles
 -Dch.ethz.iks.concierge.log.enabled=true
 -Dch.ethz.iks.concierge.log.level=4
+-Dch.ethz.iks.concierge.log.quiet=false
 -Dorg.osgi.service.http.port=9876
 
 -init
 
--istart FreenetLogger.jar
+-install FreenetLogger.jar
 -istart FreenetService.jar
 -istart concierge-http.jar
--istart FreenetConfigurator.jar
+-install jgit.jar
+-istart SchwachkopfEinsteck.jar

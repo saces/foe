@@ -48,20 +48,12 @@
 		<chmod dir="${target}/bin" perm="+x" includes="wrapper*" excludes="*.exe"/>
 		<delete file="tmp.tar"/>
 
-		<copy file="../orbit/lib/servlet-api-2.3.jar" todir="${target}"/>
-
-		<!-- copy file="../orbit/lib/freenet-ext.jar" todir="${target}"/ -->
-		<!-- copy file="../../fred/lib/freenet-cvs-snapshot.jar" tofile="${target}/freenet.jar"/ -->
-
 		<copy file="../../concierge/framework/dist/fconcierge.jar" tofile="${target}/fconcierge.jar"/>
-
-		<copy file="../FreenetService/dist/FreenetService.jar" todir="${target}/bundles/"/>
-
-		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
-
-		<copy file="../FreenetConfigurator/dist/FreenetConfigurator.jar" todir="${target}/bundles/"/>
-		
 		<copy file="../FreenetLogger/dist/FreenetLogger.jar" todir="${target}/bundles/"/>
+		<copy file="../../fred/lib/FreenetService.jar" todir="${target}/bundles/"/>
+		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
+		<copy file="../../jgit/dist/jgit.jar" todir="${target}/bundles/"/>
+		<copy file="../../SchwachkopfEinsteck/dist/SchwachkopfEinsteck.jar" todir="${target}/bundles/"/>
 
 	</target>
 
