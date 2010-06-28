@@ -53,7 +53,7 @@
 		<!-- copy file="../orbit/lib/freenet-ext.jar" todir="${target}"/ -->
 		<!-- copy file="../../fred/lib/freenet-cvs-snapshot.jar" tofile="${target}/freenet.jar"/ -->
 
-		<copy file="../../concierge/framework/dist/fconcierce.jar" tofile="${target}/fconcierce.jar"/>
+		<copy file="../../concierge/framework/dist/fconcierge.jar" tofile="${target}/fconcierge.jar"/>
 
 		<copy file="../FreenetService/dist/FreenetService.jar" todir="${target}/bundles/"/>
 
