@@ -8,7 +8,7 @@
 
 	<target name="compile" description="Compile the code">
 		<mkdir dir="${build}" />
-		<javac srcdir="${src}" destdir="${build}" nowarn="false" debug="false" optimize="true" deprecation="true" target="1.5" verbose="false" fork="false" source="1.5">
+		<javac srcdir="${src}" destdir="${build}" debug="true" optimize="true" target="1.5" source="1.5">
 			<classpath>
 				<pathelement location="${framework.jar.location}"/>
 			</classpath>
