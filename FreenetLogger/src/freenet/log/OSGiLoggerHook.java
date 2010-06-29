@@ -11,6 +11,8 @@ import java.util.TimeZone;
 
 import org.osgi.service.log.LogService;
 
+import freenet.log.Logger.LogLevel;
+
 /**
  * Converted the old StandardLogger to Ian's loggerhook interface.
  * 
@@ -69,7 +71,7 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 	 * @param threshold
 	 *            Lowest logged priority
 	 */
-	public OSGiLoggerHook(LogService osgilog, String fmt, String dfmt, int threshold) {
+	public OSGiLoggerHook(LogService osgilog, String fmt, String dfmt, LogLevel threshold) {
 		super(threshold);
 		osgiLog = osgilog;
 		setDateFormat(dfmt);
@@ -133,7 +135,7 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 	}
 
 	@Override
-	public void log(Object o, Class<?> c, String msg, Throwable e, int priority) {
+	public void log(Object o, Class<?> c, String msg, Throwable e, LogLevel priority) {
 		if (!instanceShouldLog(priority, c))
 			return;
 
@@ -168,7 +170,7 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 					sb.append(Thread.currentThread().getName());
 					break;
 				case PRIORITY :
-					sb.append(LoggerHook.priorityOf(priority));
+					sb.append(priority.name());
 					break;
 				case MESSAGE :
 					sb.append(msg);
@@ -178,15 +180,13 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 					break;
 			}
 		}
-		//sb.append('\n');
 
-		priority = transformLogLevelFO(priority);
+		int prio = LogLevel.toOSGiLogLevel(priority);
 		if (e != null) {
-			osgiLog.log(priority, sb.toString(), e);
+			osgiLog.log(prio, sb.toString(), e);
 		} else {
-			osgiLog.log(priority, sb.toString());
+			osgiLog.log(prio, sb.toString());
 		}
-		
 	}
 
 	private static int numberOf(char c) {
@@ -208,21 +208,6 @@ public class OSGiLoggerHook extends LoggerHook implements Closeable {
 			default :
 				return 0;
 		}
-	}
-
-	@Override
-	public long minFlags() {
-		return 0;
-	}
-
-	@Override
-	public long notFlags() {
-		return INTERNAL;
-	}
-
-	@Override
-	public long anyFlags() {
-		return ((2 * ERROR) - 1) & ~(threshold - 1);
 	}
 
 	public void close() {
