@@ -54,6 +54,7 @@
 		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
 		<copy file="../../jgit/dist/jgit.jar" todir="${target}/bundles/"/>
 		<copy file="../../SchwachkopfEinsteck/dist/SchwachkopfEinsteck.jar" todir="${target}/bundles/"/>
+		<copy file="../../MimeUtil/dist/MimeUtil.jar" todir="${target}/bundles/"/>
 
 	</target>
 

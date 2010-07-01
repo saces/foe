@@ -11,3 +11,4 @@
 -istart concierge-http.jar
 -install jgit.jar
 -istart SchwachkopfEinsteck.jar
+-install MimeUtil.jar
