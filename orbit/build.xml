@@ -16,7 +16,7 @@
 	<property name="wrapper.location" location="${contrib}/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 	<property name="servletapi.version" value="2.3"/>
 	<property name="servletapi.location" location="${lib}/servlet-api-${servletapi.version}.jar"/>
-	<property name="javolution.version" value="5.5.0"/>
+	<property name="javolution.version" value="5.5.1"/>
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
 
 	
