@@ -8,7 +8,7 @@
 			(and without typing -D each time it compiles it) -->
 	<property file="build.properties" />
 
-	<property name="wrapper.version" value="3.4.0"/>
+	<property name="wrapper.version" value="3.5.1"/>
 	<property name="wrapper.location" location="../orbit/contrib/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 
 	<!-- set global properties for this build -->
