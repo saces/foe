@@ -19,7 +19,7 @@
 		<mkdir dir="${target}"/>
 	</target>
 
-	<target name="install" depends="clean, mkdir">
+	<target name="install" depends="mkdir">
 		<copy todir="${target}" includeEmptyDirs="true">
 			<fileset dir="${template}"/>
 		</copy>
