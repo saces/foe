@@ -18,8 +18,9 @@
 	<property name="servletapi.location" location="${lib}/servlet-api-${servletapi.version}.jar"/>
 	<property name="javolution.version" value="5.5.1"/>
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
+	<property name="gwt.version" value="2.0.4"/>
+	<property name="gwt.location" location="${contrib}/gwt-${gwt.version}.zip"/>
 
-	
 	<target name="mkdir">
 		<mkdir dir="${lib}"/>
 		<mkdir dir="${contrib}"/>
@@ -30,6 +31,7 @@
 		<available file="${wrapper.location}" property="wrapper.present"/>
 		<available file="${servletapi.location}" property="servletapi.present"/>
 		<available file="${javolution.location}" property="javolution.present"/>
+		<available file="${gwt.location}" property="gwt.present"/>
 	</target>
 
 	<target name="get-extjar" depends="env" unless="freenet-ext.present"
@@ -86,16 +88,22 @@
 			usetimestamp="true"/>
 	</target>
 
-	<target name="orbit" depends="get-extjar, get-wrapper, get-servletapi, get-javolution">
-	</target>
-
-	<target name="test">
-		<untar src="tmp.tar" dest="${lib}">
+	<target name="get-gwt" depends="env" unless="gwt.present"
+		description="Download Google Web Toolkit">
+		<get src="http://google-web-toolkit.googlecode.com/files/gwt-${gwt.version}.zip"
+			dest="${gwt.location}"
+			verbose="true"
+			usetimestamp="true"/>
+		<unzip src="${gwt.location}" dest="${lib}">
 			<patternset>
-				<include name="wrapper-delta-pack-${wrapper.version}/lib/wrapper.jar"/>
+				<include name="gwt-${gwt.version}/gwt-dev.jar"/>
+				<include name="gwt-${gwt.version}/gwt-user.jar"/>
 			</patternset>
 			<mapper type="flatten"/>
-		</untar>
+		</unzip>
+	</target>
+
+	<target name="orbit" depends="get-extjar, get-wrapper, get-servletapi, get-javolution, get-gwt">
 	</target>
 
 	<!-- ================================================== -->
