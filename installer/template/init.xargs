@@ -9,8 +9,14 @@
 -init
 
 -install FreenetLogger.jar
+-install FreenetSupport.jar
+-install FreenetClientAPI.jar
+-istart concierge-event.jar
 -istart FreenetService.jar
 -istart concierge-http.jar
+-istart KeyUtils.jar
+-install MimeUtil.jar
+-install milton.jar
+-istart SiteToolPlugin.jar
 -install jgit.jar
 -istart SchwachkopfEinsteck.jar
--install MimeUtil.jar
