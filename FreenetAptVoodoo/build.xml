@@ -26,6 +26,7 @@
 			<include name="**/*.java"/>
 			<classpath>
 				<pathelement location="${parser.lib}"/>
+				<pathelement location="${logger.lib}"/>
 			</classpath>
 		</javac>
 		<jar jarfile="dist/FreenetAptVoodoo.jar" duplicate="fail">
