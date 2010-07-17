@@ -17,7 +17,6 @@ import freenet.log.Logger;
  * @author syoung
  */
 public class HexUtil {
-	private static boolean logDEBUG =Logger.shouldLog(Logger.DEBUG,HexUtil.class);
 	private HexUtil() {		
 	}	
 	
@@ -120,7 +119,8 @@ public class HexUtil {
 		int bytesAlloc = countBytesForBits(size);
 		byte[] b = new byte[bytesAlloc];
 		StringBuilder sb =null;
-		if(logDEBUG) sb = new StringBuilder(8*bytesAlloc); //TODO: Should it be 2*8*bytesAlloc here?
+		// TODO cover StringBuilder construction with ifLogDebug
+		sb = new StringBuilder(8*bytesAlloc); //TODO: Should it be 2*8*bytesAlloc here?
 		for(int i=0;i<b.length;i++) {
 			short s = 0;
 			for(int j=0;j<8;j++) {
@@ -129,12 +129,13 @@ public class HexUtil {
 					idx > size - 1 ? false :
 						ba.get(idx);
 				s |= val ? (1<<j) : 0;
-				if(logDEBUG) sb.append(val ? '1' : '0');
+				// TODO cover StringBuilder addition with ifLogDebug
+				sb.append(val ? '1' : '0');
 			}
 			if(s > 255) throw new IllegalStateException("WTF? s = "+s);
 			b[i] = (byte)s;
 		}
-		if(logDEBUG) Logger.debug(HexUtil.class, "bytes: "+bytesAlloc+" returned from bitsToBytes("
+		Logger.debug(HexUtil.class, "bytes: "+bytesAlloc+" returned from bitsToBytes("
 				+ba+ ',' +size+"): "+bytesToHex(b)+" for "+sb.toString());
 		return b;
 	}
@@ -164,7 +165,7 @@ public class HexUtil {
 	 * @param ba the bitset to write to
 	 */
 	public static void bytesToBits(byte[] b, BitSet ba, int maxSize) {
-		if(logDEBUG) Logger.debug(HexUtil.class, "bytesToBits("+bytesToHex(b)+",ba,"+maxSize);
+		Logger.debug(HexUtil.class, "bytesToBits("+bytesToHex(b)+",ba,"+maxSize);
 		int x = 0;
 		for(int i=0;i<b.length;i++) {
 			for(int j=0;j<8;j++) {

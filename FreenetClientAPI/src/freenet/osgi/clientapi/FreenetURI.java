@@ -75,17 +75,6 @@ import freenet.osgi.support.io.FileUtil;
  */
 // WARNING: THIS CLASS IS STORED IN DB4O -- THINK TWICE BEFORE ADD/REMOVE/RENAME FIELDS
 public class FreenetURI implements Cloneable {
-	private static volatile boolean logMINOR;
-	private static volatile boolean logDEBUG;
-	static {
-		Logger.registerLogThresholdCallback(new LogThresholdCallback() {
-			@Override
-			public void shouldUpdate() {
-				logMINOR = Logger.shouldLog(Logger.MINOR, this);
-				logDEBUG = Logger.shouldLog(Logger.DEBUG, this);
-			}
-		});
-	}
 
 	private final String keyType,  docName;
 	/** The meta-strings, in the order they are given. Typically we will
@@ -208,12 +197,13 @@ public class FreenetURI implements Cloneable {
 		} else
 			extra = null;
 		this.suggestedEdition = uri.suggestedEdition;
-		if(logMINOR) Logger.minor(this, "Copied: "+toString()+" from "+uri.toString(), new Exception("debug"));
+		Logger.minor(this, "Copied: "+toString()+" from "+uri.toString(), new Exception("debug"));
 	}
 
 	public FreenetURI(String keyType, String docName) {
 		this(keyType, docName, (String[]) null, null, null, null);
 	}
+
 	public static final FreenetURI EMPTY_CHK_URI = new FreenetURI("CHK", null, null, null, null, null);
 
 	public FreenetURI(
@@ -253,7 +243,7 @@ public class FreenetURI implements Cloneable {
 		this.cryptoKey = cryptoKey;
 		this.extra = extra2;
 		this.suggestedEdition = -1;
-		if (logDEBUG) Logger.minor(this, "Created from components: "+toString(), new Exception("debug"));
+		Logger.minor(this, "Created from components: "+toString(), new Exception("debug"));
 	}
 
 	public FreenetURI(
@@ -271,7 +261,7 @@ public class FreenetURI implements Cloneable {
 		this.cryptoKey = cryptoKey;
 		this.extra = extra2;
 		this.suggestedEdition = suggestedEdition;
-		if (logDEBUG) Logger.minor(this, "Created from components (B): "+toString(), new Exception("debug"));
+		Logger.minor(this, "Created from components (B): "+toString(), new Exception("debug"));
 	}
 
 	// Strip http:// and freenet: prefix
@@ -414,7 +404,7 @@ public class FreenetURI implements Cloneable {
 		} catch(IllegalBase64Exception e) {
 			throw new MalformedURLException("Invalid Base64 quantity: " + e);
 		}
-		if (logDEBUG) Logger.debug(this, "Created from parse: "+toString()+" from "+URI, new Exception("debug"));
+		Logger.debug(this, "Created from parse: "+toString()+" from "+URI, new Exception("debug"));
 	}
 
 	/** USK constructor from components. */
@@ -427,7 +417,7 @@ public class FreenetURI implements Cloneable {
 		this.docName = siteName;
 		this.suggestedEdition = suggestedEdition2;
 		metaStr = null;
-		if (logDEBUG) Logger.minor(this, "Created from components (USK): "+toString(), new Exception("debug"));
+		Logger.minor(this, "Created from components (USK): "+toString(), new Exception("debug"));
 	}
 
 	/** Dump the individual components of the key to System.out. */
@@ -680,7 +670,7 @@ public class FreenetURI implements Cloneable {
 	public String toString(boolean prefix, boolean pureAscii) {
 		if(keyType == null) {
 			// Not activated or something...
-			if(logMINOR) Logger.minor(this, "Not activated?? in toString("+prefix+","+pureAscii+")");
+			Logger.minor(this, "Not activated?? in toString("+prefix+","+pureAscii+")");
 			return null;
 		}
 		StringBuilder b;
@@ -773,7 +763,7 @@ public class FreenetURI implements Cloneable {
 		int len = dis.readShort();
 		byte[] buf = new byte[len];
 		dis.readFully(buf);
-		if(logMINOR) Logger.minor(FreenetURI.class, "Read " + len + " bytes for key");
+		Logger.minor(FreenetURI.class, "Read " + len + " bytes for key");
 		return fromFullBinaryKey(buf);
 	}
 
@@ -841,8 +831,7 @@ public class FreenetURI implements Cloneable {
 		if(data.length > Short.MAX_VALUE)
 			throw new MalformedURLException("Full key too long: " + data.length + " - " + this);
 		dos.writeShort((short) data.length);
-		if(logMINOR)
-			Logger.minor(this, "Written " + data.length + " bytes");
+		Logger.minor(this, "Written " + data.length + " bytes");
 		dos.write(data);
 	}
 
@@ -899,12 +888,10 @@ public class FreenetURI implements Cloneable {
 	 * from more than one part of the URI e.g. SSK@blah,blah,blah/sitename/
 	 * might return sitename. */
 	public String getPreferredFilename() {
-		if (logMINOR)
-			Logger.minor(this, "Getting preferred filename for " + this);
+		Logger.minor(this, "Getting preferred filename for " + this);
 		ArrayList<String> names = new ArrayList<String>();
 		if(keyType != null && (keyType.equals("KSK") || keyType.equals("SSK") || keyType.equals("USK"))) {
-			if(logMINOR)
-				Logger.minor(this, "Adding docName: " + docName);
+			Logger.minor(this, "Adding docName: " + docName);
 			names.add(docName);
 			if(keyType.equals("USK"))
 				names.add(Long.toString(suggestedEdition));
@@ -912,34 +899,28 @@ public class FreenetURI implements Cloneable {
 		if(metaStr != null)
 			for(int i = 0; i < metaStr.length; i++) {
 				if(metaStr[i] == null || metaStr[i].equals("")) {
-					if(logMINOR)
-						Logger.minor(this, "metaString " + i + ": was null or empty");
+					Logger.minor(this, "metaString " + i + ": was null or empty");
 					continue;
 				}
-				if(logMINOR)
-					Logger.minor(this, "Adding metaString " + i + ": " + metaStr[i]);
+				Logger.minor(this, "Adding metaString " + i + ": " + metaStr[i]);
 				names.add(metaStr[i]);
 			}
 		StringBuilder out = new StringBuilder();
 		for(int i = 0; i < names.size(); i++) {
 			String s = names.get(i);
-			if(logMINOR)
-				Logger.minor(this, "name " + i + " = " + s);
+			Logger.minor(this, "name " + i + " = " + s);
 			s = FileUtil.sanitize(s);
-			if(logMINOR)
-				Logger.minor(this, "Sanitized name " + i + " = " + s);
+			Logger.minor(this, "Sanitized name " + i + " = " + s);
 			if(s.length() > 0) {
 				if(out.length() > 0)
 					out.append('-');
 				out.append(s);
 			}
 		}
-		if(logMINOR)
-			Logger.minor(this, "out = " + out.toString());
+		Logger.minor(this, "out = " + out.toString());
 		if(out.length() == 0) {
 			if(routingKey != null) {
-				if(logMINOR)
-					Logger.minor(this, "Returning base64 encoded routing key");
+				Logger.minor(this, "Returning base64 encoded routing key");
 				return Base64.encode(routingKey);
 			}
 			return "unknown";

@@ -206,8 +206,7 @@ final public class FileUtil {
 		DataInputStream dis = null;
 		FileOutputStream fos = null;
 		File file = File.createTempFile("temp", ".tmp", target.getParentFile());
-		if(Logger.shouldLog(Logger.MINOR, FileUtil.class))
-			Logger.minor(FileUtil.class, "Writing to "+file+" to be renamed to "+target);
+		Logger.minor(FileUtil.class, "Writing to "+file+" to be renamed to "+target);
 		
 		try {
 			dis = new DataInputStream(input);

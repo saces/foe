@@ -28,27 +28,14 @@ public class InsertException extends Exception {
 	public int getMode() {
 		return mode;
 	}
-	
-	private static volatile boolean logMINOR;
-	
-	static {
-		Logger.registerLogThresholdCallback(new LogThresholdCallback() {
-			
-			@Override
-			public void shouldUpdate() {
-				logMINOR = Logger.shouldLog(Logger.MINOR, this);
-			}
-		});
-	}
-	
+
 	public InsertException(int m, String msg, FreenetURI expectedURI) {
 		super(getMessage(m)+": "+msg);
 		if(m == 0)
 			Logger.error(this, "Can't increment failure mode 0, not a valid mode", new Exception("error"));
 		extra = msg;
 		mode = m;
-		if(logMINOR)
-			Logger.minor(this, "Creating InsertException: "+getMessage(mode)+": "+msg, this);
+		Logger.minor(this, "Creating InsertException: "+getMessage(mode)+": "+msg, this);
 		errorCodes = null;
 		this.uri = expectedURI;
 	}
@@ -59,8 +46,7 @@ public class InsertException extends Exception {
 			Logger.error(this, "Can't increment failure mode 0, not a valid mode", new Exception("error"));
 		extra = null;
 		mode = m;
-		if(logMINOR)
-			Logger.minor(this, "Creating InsertException: "+getMessage(mode), this);
+		Logger.minor(this, "Creating InsertException: "+getMessage(mode), this);
 		errorCodes = null;
 		this.uri = expectedURI;
 	}
@@ -70,8 +56,7 @@ public class InsertException extends Exception {
 		if(mode == 0)
 			Logger.error(this, "Can't increment failure mode 0, not a valid mode", new Exception("error"));
 		extra = e.getMessage();
-		if(logMINOR)
-			Logger.minor(this, "Creating InsertException: "+getMessage(mode)+": "+e, e);
+		Logger.minor(this, "Creating InsertException: "+getMessage(mode)+": "+e, e);
 		this.mode = mode;
 		errorCodes = null;
 		initCause(e);
@@ -84,8 +69,7 @@ public class InsertException extends Exception {
 			Logger.error(this, "Can't increment failure mode 0, not a valid mode", new Exception("error"));
 		extra = null;
 		this.mode = mode;
-		if(logMINOR)
-			Logger.minor(this, "Creating InsertException: "+getMessage(mode), this);
+		Logger.minor(this, "Creating InsertException: "+getMessage(mode), this);
 		this.errorCodes = errorCodes;
 		this.uri = expectedURI;
 	}
