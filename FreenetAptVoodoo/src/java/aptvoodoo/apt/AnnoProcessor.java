@@ -25,7 +25,7 @@ import com.sun.mirror.util.DeclarationVisitor;
 import com.sun.mirror.util.DeclarationVisitors;
 import com.sun.mirror.util.SimpleDeclarationVisitor;
 
-import freenet.log.annotation.FreenetLogged;
+import freenet.log.FreenetLogged;
 
 public class AnnoProcessor implements AnnotationProcessor {
 
