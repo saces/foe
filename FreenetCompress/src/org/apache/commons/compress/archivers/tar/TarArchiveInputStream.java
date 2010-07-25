@@ -23,10 +23,9 @@
 
 package org.apache.commons.compress.archivers.tar;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -231,7 +230,7 @@ public class TarArchiveInputStream extends ArchiveInputStream {
     }
 
     private void paxHeaders() throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(this, "UTF-8"));
+        BufferedInputStream br = new BufferedInputStream(this);
         Map headers = new HashMap();
         // Format is "length keyword=value\n";
         while(true){ // get length
@@ -248,7 +247,7 @@ public class TarArchiveInputStream extends ArchiveInputStream {
                         if (ch == '='){ // end of keyword
                             String keyword = sb.toString();
                             // Get rest of entry
-                            char[] cbuf = new char[len-read];
+                            byte[] cbuf = new byte[len-read];
                             int got = br.read(cbuf);
                             if (got != len-read){
                                 throw new IOException("Failed to read Paxheader. Expected "+(len-read)+" chars, read "+got);
