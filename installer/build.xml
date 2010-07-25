@@ -52,6 +52,7 @@
 		<copy file="../FreenetLogger/dist/FreenetLogger.jar" todir="${target}/bundles/"/>
 		<copy file="../../fred/lib/FreenetService.jar" todir="${target}/bundles/"/>
 		<copy file="../FreenetSupport/dist/FreenetSupport.jar" todir="${target}/bundles/"/>
+		<copy file="../FreenetCompress/dist/FreenetCompress.jar" todir="${target}/bundles/"/>
 		<copy file="../FreenetClientAPI/dist/FreenetClientAPI.jar" todir="${target}/bundles/"/>
 
 		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
