@@ -211,9 +211,12 @@ public class BZip2CompressorInputStream extends CompressorInputStream implements
         if (in.available() == 0) {
             throw new IOException("Empty InputStream");
         }
-        checkMagicChar('B', "first");
-        checkMagicChar('Z', "second");
-        checkMagicChar('h', "third");
+		// BZip2 streams produced by the origin node
+		// have the 'BZ' magic missing. Add a hack to deal with it.
+		if (!checkMalformedFreenetMagic('B', "first")) {
+			checkMagicChar('Z', "second");
+			checkMagicChar('h', "third");
+		}
 
         int blockSize = this.in.read();
         if ((blockSize < '1') || (blockSize > '9')) {
@@ -226,6 +229,19 @@ public class BZip2CompressorInputStream extends CompressorInputStream implements
         initBlock();
         setupBlock();
     }
+
+	private boolean checkMalformedFreenetMagic(char expected, String position) throws IOException {
+		int magic = this.in.read();
+		if (magic == 'h') {
+			return true;
+		}
+		if (magic != expected) {
+			throw new IOException("Stream is not BZip2 formatted: expected '"
+					+ expected + "' as " + position + " byte but got '"
+					+ (char) magic + "'");
+		}
+		return false;
+	}
 
     private void checkMagicChar(char expected, String position)
         throws IOException {
