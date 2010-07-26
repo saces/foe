@@ -46,6 +46,9 @@
 		<zip destfile="${freenet-ext.location}">
 			<zipfileset src="${freenet-ext.location}.tmp">
 				<exclude name="org/tanukisoftware/**"/>
+				<exclude name="SevenZip/**"/>
+				<exclude name="net/contrapunctus/**"/>
+				<exclude name="org/apache/**"/>
 			</zipfileset>
 		</zip>
 		<delete file="${freenet-ext.location}.tmp"/>
