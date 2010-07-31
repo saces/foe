@@ -12,6 +12,7 @@
 -install FreenetSupport.jar
 -install FreenetClientAPI.jar
 -istart concierge-event.jar
+-install FreenetCompress.jar
 -istart FreenetService.jar
 -istart concierge-http.jar
 -istart KeyUtils.jar
