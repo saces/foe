@@ -194,7 +194,7 @@ public class TarArchiveEntry implements TarConstants, ArchiveEntry {
         this.userId = 0;
         this.groupId = 0;
         this.size = 0;
-        this.modTime = (new Date()).getTime() / MILLIS_PER_SECOND;
+        this.modTime = 0;
         this.linkName = "";
         this.userName = "";
         this.groupName = "";
