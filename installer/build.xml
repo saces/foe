@@ -55,6 +55,7 @@
 		<copy file="../FreenetCompress/dist/FreenetCompress.jar" todir="${target}/bundles/"/>
 		<copy file="../FreenetClientAPI/dist/FreenetClientAPI.jar" todir="${target}/bundles/"/>
 
+		<copy file="../../servlet-api-2.5/dist/servlet-api-2.5.jar" todir="${target}/bundles/"/>
 		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
 		<copy file="../../concierge/bundles/event/dist/concierge-event.jar" todir="${target}/bundles/"/>
 

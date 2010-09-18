@@ -14,6 +14,7 @@
 -istart concierge-event.jar
 -install FreenetCompress.jar
 -istart FreenetService.jar
+-install servlet-api-2.5.jar
 -istart concierge-http.jar
 -istart KeyUtils.jar
 -install MimeUtil.jar
