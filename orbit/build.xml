@@ -18,7 +18,7 @@
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
 	<property name="gwt.version" value="2.2.0"/>
 	<property name="gwt.location" location="${contrib}/gwt-${gwt.version}.zip"/>
-	<property name="bouncycastle.version" value="145"/>
+	<property name="bouncycastle.version" value="146"/>
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
 
 	<target name="mkdir">
@@ -97,7 +97,7 @@
 
 	<target name="get-bouncycastle" depends="env" unless="bouncycastle.present"
 			description="Download HüpfBurg">
-			<get src="http://bouncycastle.org/download/crypto-${bouncycastle.version}.zip"
+			<get src="http://downloads.bouncycastle.org/java/crypto-${bouncycastle.version}.zip"
 				dest="${bouncycastle.location}"
 				verbose="true"
 				usetimestamp="true"/>
