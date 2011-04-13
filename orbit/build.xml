@@ -16,7 +16,7 @@
 	<property name="wrapper.location" location="${contrib}/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 	<property name="javolution.version" value="5.5.1"/>
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
-	<property name="gwt.version" value="2.0.4"/>
+	<property name="gwt.version" value="2.2.0"/>
 	<property name="gwt.location" location="${contrib}/gwt-${gwt.version}.zip"/>
 	<property name="bouncycastle.version" value="145"/>
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
