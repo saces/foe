@@ -12,7 +12,7 @@
 	<property name="lib" location="lib"/>
 	<property name="contrib" location="contrib"/>
 	<property name="freenet-ext.location" location="${lib}/freenet-ext.jar"/>
-	<property name="wrapper.version" value="3.5.7"/>
+	<property name="wrapper.version" value="3.5.11"/>
 	<property name="wrapper.location" location="${contrib}/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 	<property name="javolution.version" value="5.5.1"/>
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
@@ -54,7 +54,7 @@
 
 	<target name="get-wrapper" depends="env" unless="wrapper.present"
 		description="Download some external libraries which Freenet relies on">
-		<get src="http://wrapper.tanukisoftware.org/download/${wrapper.version}/wrapper-delta-pack-${wrapper.version}.tar.gz"
+		<get src="http://wrapper.tanukisoftware.com/download/${wrapper.version}/wrapper-delta-pack-${wrapper.version}.tar.gz"
 			dest="${wrapper.location}"
 			verbose="true"
 			usetimestamp="true"/>
