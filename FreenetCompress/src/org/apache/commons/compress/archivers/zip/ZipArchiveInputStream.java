@@ -68,8 +68,8 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
     private ZipArchiveEntry current = null;
     private boolean closed = false;
     private boolean hitCentralDirectory = false;
-    private int readBytesOfEntry = 0, offsetInBuffer = 0;
-    private int bytesReadFromStream = 0;
+    private int offsetInBuffer = 0;
+    private long readBytesOfEntry = 0, bytesReadFromStream = 0;
     private int lengthOfLastRead = 0;
     private boolean hasDataDescriptor = false;
     private ByteArrayInputStream lastStoredEntry = null;
@@ -195,7 +195,7 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
 
         byte[] fileName = new byte[fileNameLen];
         readFully(fileName);
-        current.setName(entryEncoding.decode(fileName));
+        current.setName(entryEncoding.decode(fileName), fileName);
 
         byte[] extraData = new byte[extraLen];
         readFully(extraData);
@@ -256,7 +256,7 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
                     return lastStoredEntry.read(buffer, start, length);
                 }
 
-                int csize = (int) current.getSize();
+                long csize = current.getSize();
                 if (readBytesOfEntry >= csize) {
                     return -1;
                 }
@@ -272,7 +272,8 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
                     ? lengthOfLastRead - offsetInBuffer
                     : length;
                 if ((csize - readBytesOfEntry) < toRead) {
-                    toRead = csize - readBytesOfEntry;
+                    // if it is smaller than toRead then it fits into an int
+                    toRead = (int) (csize - readBytesOfEntry);
                 }
                 System.arraycopy(buf, offsetInBuffer, buffer, start, toRead);
                 offsetInBuffer += toRead;
@@ -313,11 +314,26 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
         }
     }
 
+    /**
+     * Skips over and discards value bytes of data from this input
+     * stream.
+     *
+     * <p>This implementation may end up skipping over some smaller
+     * number of bytes, possibly 0, if an only if it reaches the end
+     * of the underlying stream.</p>
+     *
+     * <p>The actual number of bytes skipped is returned.</p>
+     *
+     * @param value the number of bytes to be skipped.
+     * @return the actual number of bytes skipped.
+     * @throws IOException - if an I/O error occurs.
+     * @throws IllegalArgumentException - if value is negative.
+     */
     public long skip(long value) throws IOException {
         if (value >= 0) {
             long skipped = 0;
             byte[] b = new byte[1024];
-            while (skipped != value) {
+            while (skipped < value) {
                 long rem = value - skipped;
                 int x = read(b, 0, (int) (b.length > rem ? rem : b.length));
                 if (x == -1) {
@@ -402,16 +418,19 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
         } else {
             skip(Long.MAX_VALUE);
 
-            int inB;
+            long inB;
             if (current.getMethod() == ZipArchiveOutputStream.DEFLATED) {
-                inB = inf.getTotalIn();
+                inB = ZipUtil.adjustToLong(inf.getTotalIn());
             } else {
                 inB = readBytesOfEntry;
             }
-            int diff = 0;
+
+            // this is at most a single read() operation and can't
+            // exceed the range of int
+            int diff = (int) (bytesReadFromStream - inB);
 
             // Pushback any required bytes
-            if ((diff = bytesReadFromStream - inB) != 0) {
+            if (diff > 0) {
                 ((PushbackInputStream) in).unread(
                         buf,  lengthOfLastRead - diff, diff);
                 pushedBackBytes(diff);
@@ -423,8 +442,8 @@ public class ZipArchiveInputStream extends ArchiveInputStream {
         }
 
         inf.reset();
-        readBytesOfEntry = offsetInBuffer = bytesReadFromStream =
-            lengthOfLastRead = 0;
+        readBytesOfEntry = bytesReadFromStream = 0L;
+        offsetInBuffer = lengthOfLastRead = 0;
         crc.reset();
         current = null;
         lastStoredEntry = null;

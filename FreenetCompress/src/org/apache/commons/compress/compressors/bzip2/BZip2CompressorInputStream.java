@@ -208,9 +208,6 @@ public class BZip2CompressorInputStream extends CompressorInputStream implements
         if (null == in) {
             throw new IOException("No InputStream");
         }
-        if (in.available() == 0) {
-            throw new IOException("Empty InputStream");
-        }
 		// BZip2 streams produced by the origin node
 		// have the 'BZ' magic missing. Add a hack to deal with it.
 		if (!checkMalformedFreenetMagic('B', "first")) {
@@ -961,7 +958,7 @@ public class BZip2CompressorInputStream extends CompressorInputStream implements
          * I don't initialize it at construction time to avoid unneccessary
          * memory allocation when compressing small files.
          */
-        final int[] initTT(int length) {
+        int[] initTT(int length) {
             int[] ttShadow = this.tt;
 
             // tt.length should always be >= length, but theoretically

@@ -102,6 +102,11 @@ public class ZipFile {
     private final ZipEncoding zipEncoding;
 
     /**
+     * File name of actual source.
+     */
+    private final String archiveName;
+
+    /**
      * The actual data source.
      */
     private final RandomAccessFile archive;
@@ -110,6 +115,11 @@ public class ZipFile {
      * Whether to look for and use Unicode extra fields.
      */
     private final boolean useUnicodeExtraFields;
+
+    /**
+     * Whether the file is closed.
+     */
+    private boolean closed;
 
     /**
      * Opens the given file for reading, assuming "UTF8" for file names.
@@ -175,6 +185,7 @@ public class ZipFile {
      */
     public ZipFile(File f, String encoding, boolean useUnicodeExtraFields)
         throws IOException {
+        this.archiveName = f.getAbsolutePath();
         this.encoding = encoding;
         this.zipEncoding = ZipEncodingHelper.getZipEncoding(encoding);
         this.useUnicodeExtraFields = useUnicodeExtraFields;
@@ -187,8 +198,9 @@ public class ZipFile {
         } finally {
             if (!success) {
                 try {
+                    closed = true;
                     archive.close();
-                } catch (IOException e2) {
+                } catch (IOException e2) { // NOPMD
                     // swallow, throw the original exception instead
                 }
             }
@@ -209,6 +221,11 @@ public class ZipFile {
      * @throws IOException if an error occurs closing the archive.
      */
     public void close() throws IOException {
+        // this flag is only written here and read in finalize() which
+        // can never be run in parallel.
+        // no synchronization needed.
+        closed = true;
+
         archive.close();
     }
 
@@ -221,8 +238,8 @@ public class ZipFile {
         if (zipfile != null) {
             try {
                 zipfile.close();
-            } catch (IOException e) {
-                //ignore
+            } catch (IOException e) { // NOPMD
+                //ignore, that's why the method is called "quietly"
             }
         }
     }
@@ -300,10 +317,33 @@ public class ZipFile {
                 return bis;
             case ZipArchiveEntry.DEFLATED:
                 bis.addDummy();
-                return new InflaterInputStream(bis, new Inflater(true));
+                final Inflater inflater = new Inflater(true);
+                return new InflaterInputStream(bis, inflater) {
+                    public void close() throws IOException {
+                        super.close();
+                        inflater.end();
+                    }
+                };
             default:
                 throw new ZipException("Found unsupported compression method "
                                        + ze.getMethod());
+        }
+    }
+
+    /**
+     * Ensures that the close method of this zipfile is called when
+     * there are no more references to it.
+     * @see #close()
+     */
+    protected void finalize() throws Throwable {
+        try {
+            if (!closed) {
+                System.err.println("Cleaning up unclosed ZipFile for archive "
+                                   + archiveName);
+                close();
+            }
+        } finally {
+            super.finalize();
         }
     }
 
@@ -410,7 +450,7 @@ public class ZipFile {
 
             byte[] fileName = new byte[fileNameLen];
             archive.readFully(fileName);
-            ze.setName(entryEncoding.decode(fileName));
+            ze.setName(entryEncoding.decode(fileName), fileName);
 
             // LFH offset,
             OffsetEntry offset = new OffsetEntry();

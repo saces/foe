@@ -74,6 +74,7 @@ public class ZipArchiveEntry extends java.util.zip.ZipEntry
     private LinkedHashMap/*<ZipShort, ZipExtraField>*/ extraFields = null;
     private UnparseableExtraFieldData unparseableExtra = null;
     private String name = null;
+    private byte[] rawName = null;
     private GeneralPurposeBit gpb = new GeneralPurposeBit();
 
     /**
@@ -493,6 +494,38 @@ public class ZipArchiveEntry extends java.util.zip.ZipEntry
      */
     protected void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Sets the name using the raw bytes and the string created from
+     * it by guessing or using the configured encoding.
+     * @param name the name to use created from the raw bytes using
+     * the guessed or configured encoding
+     * @param rawName the bytes originally read as name from the
+     * archive
+     * @since Apache Commons Compress 1.2
+     */
+    protected void setName(String name, byte[] rawName) {
+        setName(name);
+        this.rawName = rawName;
+    }
+
+    /**
+     * Returns the raw bytes that made up the name before it has been
+     * converted using the configured or guessed encoding.
+     *
+     * <p>This method will return null if this instance has not been
+     * read from an archive.</p>
+     *
+     * @since Apache Commons Compress 1.2
+     */
+    public byte[] getRawName() {
+        if (rawName != null) {
+            byte[] b = new byte[rawName.length];
+            System.arraycopy(rawName, 0, b, 0, rawName.length);
+            return b;
+        }
+        return null;
     }
 
     /**
