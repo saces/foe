@@ -47,6 +47,7 @@
 				<exclude name="org/tanukisoftware/**"/>
 				<exclude name="SevenZip/**"/>
 				<exclude name="net/contrapunctus/**"/>
+				<exclude name="net/i2p/util/NativeBigInteger.class"/>
 				<exclude name="org/apache/**"/>
 			</zipfileset>
 		</zip>
