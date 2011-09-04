@@ -58,6 +58,7 @@
 		<copy file="../../servlet-api-2.5/dist/servlet-api-2.5.jar" todir="${target}/bundles/"/>
 		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
 		<copy file="../../concierge/bundles/event/dist/concierge-event.jar" todir="${target}/bundles/"/>
+		<copy file="../../concierge/bundles/service_tracker/dist/concierge-service-tracker.jar" todir="${target}/bundles/"/>
 
 		<copy file="../../jgit/dist/jgit.jar" todir="${target}/bundles/"/>
 		<copy file="../../SchwachkopfEinsteck/dist/SchwachkopfEinsteck.jar" todir="${target}/bundles/"/>
