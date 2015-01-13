@@ -16,7 +16,7 @@
 	<property name="wrapper.location" location="${contrib}/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 	<property name="javolution.version" value="5.5.1"/>
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
-	<property name="gwt.version" value="2.3.0"/>
+	<property name="gwt.version" value="2.7.0"/>
 	<property name="gwt.location" location="${contrib}/gwt-${gwt.version}.zip"/>
 	<property name="bouncycastle.version" value="146"/>
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
@@ -87,7 +87,7 @@
 
 	<target name="get-gwt" depends="env" unless="gwt.present"
 		description="Download Google Web Toolkit">
-		<get src="http://google-web-toolkit.googlecode.com/files/gwt-${gwt.version}.zip"
+		<get src="http://goo.gl/t7FQSn"
 			dest="${gwt.location}"
 			verbose="true"
 			usetimestamp="true"/>
