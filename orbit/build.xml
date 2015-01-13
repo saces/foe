@@ -12,7 +12,7 @@
 	<property name="lib" location="lib"/>
 	<property name="contrib" location="contrib"/>
 	<property name="freenet-ext.location" location="${lib}/freenet-ext.jar"/>
-	<property name="wrapper.version" value="3.5.11"/>
+	<property name="wrapper.version" value="3.5.26"/>
 	<property name="wrapper.location" location="${contrib}/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 	<property name="javolution.version" value="5.5.1"/>
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
