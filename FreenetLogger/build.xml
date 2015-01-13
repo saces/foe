@@ -4,7 +4,7 @@
 	<property name="src" location="src" />
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
-	<property name="framework.jar.location" location="../../concierge/framework/dist/fconcierge.jar"/>
+	<property name="framework.jar.location" location="../../concierge/org.eclipse.concierge/dist/org.eclipse.concierge.jar"/>
 
 	<target name="compile" description="Compile the code">
 		<mkdir dir="${build}" />

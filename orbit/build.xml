@@ -20,6 +20,8 @@
 	<property name="gwt.location" location="${contrib}/gwt-${gwt.version}.zip"/>
 	<property name="bouncycastle.version" value="146"/>
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
+	<property name="felix.lighthttp.version" value="0.1.4"/>
+	<property name="felix.lighthttp.location" value="${lib}/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"/>
 
 	<target name="mkdir">
 		<mkdir dir="${lib}"/>
@@ -33,6 +35,7 @@
 		<available file="${javolution.location}" property="javolution.present"/>
 		<available file="${gwt.location}" property="gwt.present"/>
 		<available file="${bouncycastle.location}" property="bouncycastle.present"/>
+		<available file="${felix.lighthttp.location}" property="felix.lighthttp.present"/>
 	</target>
 
 	<target name="get-extjar" depends="env" unless="freenet-ext.present"
@@ -105,7 +108,15 @@
 				usetimestamp="true"/>
 	</target>
 
-	<target name="orbit" depends="get-extjar, get-wrapper, get-javolution, get-gwt, get-bouncycastle">
+	<target name="get-felix-lighthttp" depends="env" unless="felix.lighthttp.present"
+			description="Get Apache Felix Lightwigth HTTP Service Implementation">
+			<get src="http://mirror.netcologne.de/apache.org//felix/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"
+				dest="${felix.lighthttp.location}"
+				verbose="true"
+				usetimestamp="true"/>
+	</target>
+
+	<target name="orbit" depends="get-extjar, get-wrapper, get-javolution, get-gwt, get-bouncycastle, get-felix-lighthttp">
 	</target>
 
 	<!-- ================================================== -->
