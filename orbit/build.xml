@@ -22,7 +22,6 @@
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
 	<property name="felix.lighthttp.version" value="0.1.4"/>
 	<property name="felix.lighthttp.location" value="${lib}/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"/>
-	<property name="fred.bcprov.location" value="../../fred/lib"/>
 
 	<target name="mkdir">
 		<mkdir dir="${lib}"/>
@@ -36,7 +35,6 @@
 		<available file="${javolution.location}" property="javolution.present"/>
 		<available file="${gwt.location}" property="gwt.present"/>
 		<available file="${bouncycastle.location}" property="bouncycastle.present"/>
-		<available file="${felix.lighthttp.location}" property="felix.lighthttp.present"/>
 	</target>
 
 	<target name="get-extjar" depends="env" unless="freenet-ext.present"
@@ -107,14 +105,14 @@
 				dest="${bouncycastle.location}"
 				verbose="true"
 				usetimestamp="true"/>
-		<unzip src="${bouncycastle.location}" dest="${fred.bcprov.location}">
+		<unzip src="${bouncycastle.location}" dest="${lib}">
 			<patternset>
 				<include name="crypto-${bouncycastle.version}/jars/bcprov-jdk15on-${bouncycastle.version}.jar"/>
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
-		<copy file="${fred.bcprov.location}/bcprov-jdk15on-${bouncycastle.version}.jar"
-		    tofile="${fred.bcprov.location}/bcprov.jar"/>
+		<copy file="${lib}/bcprov-jdk15on-${bouncycastle.version}.jar"
+				tofile="${lib}/bcprov.jar"/>
 	</target>
 
 	<target name="get-felix-lighthttp" depends="env" unless="felix.lighthttp.present"
