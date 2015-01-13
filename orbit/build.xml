@@ -22,6 +22,7 @@
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
 	<property name="felix.lighthttp.version" value="0.1.4"/>
 	<property name="felix.lighthttp.location" value="${lib}/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"/>
+	<property name="fred.bcprov.location" value="../../fred/lib"/>
 
 	<target name="mkdir">
 		<mkdir dir="${lib}"/>
@@ -102,10 +103,18 @@
 
 	<target name="get-bouncycastle" depends="env" unless="bouncycastle.present"
 			description="Download HüpfBurg">
-			<get src="http://downloads.bouncycastle.org/java/crypto-${bouncycastle.version}.zip"
+		<get src="http://downloads.bouncycastle.org/java/crypto-${bouncycastle.version}.zip"
 				dest="${bouncycastle.location}"
 				verbose="true"
 				usetimestamp="true"/>
+		<unzip src="${bouncycastle.location}" dest="${fred.bcprov.location}">
+			<patternset>
+				<include name="crypto-${bouncycastle.version}/jars/bcprov-jdk15on-${bouncycastle.version}.jar"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</unzip>
+		<copy file="${fred.bcprov.location}/bcprov-jdk15on-${bouncycastle.version}.jar"
+		    tofile="${fred.bcprov.location}/bcprov.jar"/>
 	</target>
 
 	<target name="get-felix-lighthttp" depends="env" unless="felix.lighthttp.present"
