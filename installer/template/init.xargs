@@ -1,7 +1,7 @@
--Dch.ethz.iks.concierge.jars=file:./bundles
--Dch.ethz.iks.concierge.log.enabled=true
--Dch.ethz.iks.concierge.log.level=4
--Dch.ethz.iks.concierge.log.quiet=false
+-Dorg.eclipse.concierge.jars=file:./bundles
+-Dorg.eclipse.concierge.log.enabled=true
+-Dorg.eclipse.concierge.log.level=4
+-Dorg.eclipse.concierge.log.quiet=false
 -Dorg.osgi.service.http.port=9876
 -Dfoe.log.threshold=ERROR
 -Dfoe.log.detailedthreshold=ske:DEBUG,saces.KeyUtils:DEBUG,stp:DEBUG
