@@ -21,8 +21,8 @@
 		<jar jarfile="${dist}/FreenetCompress.jar" compress="true" index="false" basedir="${build}" excludes="**/package.html">
 			<manifest>
 				<!-- attribute name="Main-Class" value="ch.ethz.iks.concierge.framework.Framework" / -->
-				<!-- attribute name="Bundle-ManifestVersion" value="2" / -->
-				<!-- attribute name="Bundle-SymbolicName" value="org.foo.example.Example" / -->
+				<attribute name="Bundle-ManifestVersion" value="2" />
+				<attribute name="Bundle-SymbolicName" value="Freenet.compress"/>
 				<!-- attribute name="Bundle-Version" value="1" / -->
 				<!-- attribute name="Bundle-Activator" value="freenet.log.Activator" / -->
 				<attribute name="Import-Package" value="freenet.osgi.support.io"/>
