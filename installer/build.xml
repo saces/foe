@@ -8,11 +8,11 @@
 			(and without typing -D each time it compiles it) -->
 	<property file="build.properties" />
 
-	<property name="wrapper.version" value="3.5.11"/>
+	<property name="wrapper.version" value="3.5.26"/>
 	<property name="wrapper.location" location="../orbit/contrib/wrapper-delta-pack-${wrapper.version}.tar.gz"/>
 
 	<!-- set global properties for this build -->
-	<property name="target" location="/home/saces/automative/freenet-osgi-test"/>
+	<property name="target" location="/home/saces/projekt/freenet/freenet-osgi-test"/>
 	<property name="template" location="template"/>
 
 	<target name="mkdir">
@@ -48,17 +48,14 @@
 		<chmod dir="${target}/bin" perm="+x" includes="wrapper*" excludes="*.exe"/>
 		<delete file="tmp.tar"/>
 
-		<copy file="../../concierge/framework/dist/fconcierge.jar" tofile="${target}/fconcierge.jar"/>
+		<copy file="../../concierge/org.eclipse.concierge/dist/org.eclipse.concierge.jar" tofile="${target}/org.eclipse.concierge.jar"/>
 		<copy file="../FreenetLogger/dist/FreenetLogger.jar" todir="${target}/bundles/"/>
 		<copy file="../../fred/dist/FreenetService.jar" todir="${target}/bundles/"/>
 		<copy file="../FreenetSupport/dist/FreenetSupport.jar" todir="${target}/bundles/"/>
 		<copy file="../FreenetCompress/dist/FreenetCompress.jar" todir="${target}/bundles/"/>
 		<copy file="../FreenetClientAPI/dist/FreenetClientAPI.jar" todir="${target}/bundles/"/>
 
-		<copy file="../../servlet-api-2.5/dist/servlet-api-2.5.jar" todir="${target}/bundles/"/>
-		<copy file="../../concierge/bundles/http/dist/concierge-http.jar" todir="${target}/bundles/"/>
-		<copy file="../../concierge/bundles/event/dist/concierge-event.jar" todir="${target}/bundles/"/>
-		<copy file="../../concierge/bundles/service_tracker/dist/concierge-service-tracker.jar" todir="${target}/bundles/"/>
+		<copy file="../orbit/lib/org.apache.felix.httplite.complete-0.1.4.jar" todir="${target}/bundles/"/>
 
 		<copy file="../../jgit/dist/jgit.jar" todir="${target}/bundles/"/>
 		<copy file="../../SchwachkopfEinsteck/dist/SchwachkopfEinsteck.jar" todir="${target}/bundles/"/>
