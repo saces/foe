@@ -117,7 +117,7 @@
 
 	<target name="get-felix-lighthttp" depends="env" unless="felix.lighthttp.present"
 			description="Get Apache Felix Lightwigth HTTP Service Implementation">
-			<get src="http://mirror.netcologne.de/apache.org//felix/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"
+			<get src="http://www.apache.org/dist/felix/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"
 				dest="${felix.lighthttp.location}"
 				verbose="true"
 				usetimestamp="true"/>
