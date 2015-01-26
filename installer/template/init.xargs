@@ -13,6 +13,7 @@
 -install FreenetSupport.jar
 -install FreenetClientAPI.jar
 -install FreenetCompress.jar
+-install bcprov.jar
 -istart FreenetService.jar
 -istart org.apache.felix.httplite.complete-0.1.4.jar
 -istart KeyUtils.jar

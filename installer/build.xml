@@ -56,6 +56,7 @@
 		<copy file="../FreenetClientAPI/dist/FreenetClientAPI.jar" todir="${target}/bundles/"/>
 
 		<copy file="../orbit/lib/org.apache.felix.httplite.complete-0.1.4.jar" todir="${target}/bundles/"/>
+		<copy file="../orbit/lib/bcprov.jar" todir="${target}/bundles/"/>
 
 		<copy file="../../jgit/dist/jgit.jar" todir="${target}/bundles/"/>
 		<copy file="../../SchwachkopfEinsteck/dist/SchwachkopfEinsteck.jar" todir="${target}/bundles/"/>
