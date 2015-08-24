@@ -18,7 +18,7 @@
 	<property name="javolution.location" location="${lib}/javolution-${javolution.version}.jar"/>
 	<property name="gwt.version" value="2.7.0"/>
 	<property name="gwt.location" location="${contrib}/gwt-${gwt.version}.zip"/>
-	<property name="bouncycastle.version" value="151"/>
+	<property name="bouncycastle.version" value="152"/>
 	<property name="bouncycastle.location" location="${contrib}/bouncycastle-${bouncycastle.version}.zip"/>
 	<property name="felix.lighthttp.version" value="0.1.4"/>
 	<property name="felix.lighthttp.location" value="${lib}/org.apache.felix.httplite.complete-${felix.lighthttp.version}.jar"/>
