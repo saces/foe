@@ -123,7 +123,7 @@
 				usetimestamp="true"/>
 	</target>
 
-	<target name="orbit" depends="get-extjar, get-wrapper, get-javolution, get-gwt, get-bouncycastle, get-felix-lighthttp">
+	<target name="orbit" depends="get-extjar, get-wrapper, get-gwt, get-bouncycastle, get-felix-lighthttp">
 	</target>
 
 	<!-- ================================================== -->
